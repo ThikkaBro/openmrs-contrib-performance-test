@@ -1,0 +1,24 @@
+name: Performance Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  performance-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+      - name: Install Gatling
+        run: |
+          wget https://downloads.apache.org/gatling/3.7.2/gatling-charts-highcharts-bundle-3.7.2.zip
+          unzip gatling-charts-highcharts-bundle-3.7.2.zip
+      - name: Run Performance Test
+        run: |
+          ./gatling-charts-highcharts-bundle-3.7.2/bin/gatling.sh -s mySimulationClass
